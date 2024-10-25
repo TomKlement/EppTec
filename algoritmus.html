@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head>
+        <meta charset="utf-8" />
+        <title>Algoritmus</title>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+
+
+            let cards = [
+                {
+                    cardNumber: "1234567812345678",
+                    cvv: "123",
+                    expirationDate: "12/25" 
+                },
+                {
+                    cardNumber: "98765432109",
+                    cvv: "456",
+                    expirationDate: "10/22"
+                },
+                {
+                    cardNumber: "1122334455667788",
+                    cvv: "789",
+                    expirationDate: "08/24"
+                },
+                {
+                    cardNumber: "4433221100112233",
+                    cvv: "12",  
+                    expirationDate: "11/26"
+                },
+                {
+                    cardNumber: "5566778899001122",
+                    cvv: "9999",  
+                    expirationDate: "09/25"
+                },
+                {
+                    cardNumber: "6677889900112233",
+                    cvv: "345",
+                    expirationDate: "07/29"
+                }
+            ];
+            console.table(cards)
+
+            // ValidRules, function outputs TRUE/FALSE, INPUT = card from array
+
+            function isValidCard(card) {
+
+                return isValidCardLength(card) && isValidCVV(card) && isValidExpiration(card)
+
+            };
+
+            // Rules for Arrays
+            // 16 as VISA / 15 as American Express
+
+            function isValidCardLength(card){
+                return card.cardNumber.length === 15 || card.cardNumber.length === 16
+            }; 
+
+            // ValidExpiration
+
+            function isValidExpiration(card) {
+                let date = new Date();
+                
+                let [month, year] = card.expirationDate.split("/");
+                let expirationDate = new Date(`20${year}-${month}-01`)
+
+                return expirationDate > date;
+
+
+            };
+
+            // Valid CVV, 3 numbers must
+
+            function isValidCVV(card){
+                return card.cvv.length === 3
+            };
+            
+            // Iteration from the end
+
+            for (let i = cards.length - 1; i >= 0; i--) {
+                if(!isValidCard(cards[i])){
+                    cards.splice(i,1);
+                }
+            }
+
+            console.table(cards)
+
+
+
+
+        </script>
+    </body>
+</html>
